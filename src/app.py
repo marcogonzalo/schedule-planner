@@ -7,9 +7,11 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.db import db
+from api import BASE_ROUTE as API_BASE_ROUTE
 from api.routes import api
-from api.endpoints.course_types import course_types
+from api.course_types import BASE_ROUTE as COURSE_TYPES_BASE_ROUTE
+from api.course_types.routes import course_types
 from api.admin import setup_admin
 #from models import Person
 
@@ -24,9 +26,9 @@ if os.getenv("DATABASE_URL") is not None:
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db)
 db.init_app(app)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Allow CORS requests to this API
 CORS(app)
@@ -35,8 +37,8 @@ CORS(app)
 setup_admin(app)
 
 # Add all endpoints form the API with a "api" prefix
-app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(course_types, url_prefix='/api/course-types')
+app.register_blueprint(api, url_prefix=API_BASE_ROUTE)
+app.register_blueprint(course_types, url_prefix=API_BASE_ROUTE + COURSE_TYPES_BASE_ROUTE)
 
 
 # Handle/serialize errors like a JSON object
