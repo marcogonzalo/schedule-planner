@@ -9,6 +9,7 @@ from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
+from api.endpoints.course_types import course_types
 from api.admin import setup_admin
 #from models import Person
 
@@ -35,6 +36,8 @@ setup_admin(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+app.register_blueprint(course_types, url_prefix='/api/course-types')
+
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
