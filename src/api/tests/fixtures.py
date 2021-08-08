@@ -1,16 +1,14 @@
+# Main testing fila
+# For more about Python/Flask testing
+# see URL: https://flask.palletsprojects.com/en/2.0.x/testing/
+
 import pytest
+from flask import Flask
+from app import app as application
 
 @pytest.fixture
 def app():
-    from flask import Flask
-    from api import BASE_ROUTE as API_BASE_ROUTE
-    from api.routes import api
-    from api.course_types import BASE_ROUTE as COURSE_TYPES_BASE_ROUTE
-    from api.course_types.routes import course_types
-    app = Flask(__name__)
-    app.register_blueprint(api, url_prefix=API_BASE_ROUTE)
-    app.register_blueprint(course_types, url_prefix=API_BASE_ROUTE + COURSE_TYPES_BASE_ROUTE)
-    yield app
+    yield application
  
 @pytest.fixture
 def client(app):
