@@ -6,14 +6,18 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
-from api.utils import APIException, generate_sitemap
-from api.db import db
+
 from api import BASE_ROUTE as API_BASE_ROUTE
+from api.db import db
+
+from api.admin import setup_admin
 from api.routes import api
+from api.utils import APIException, generate_sitemap
+
 from api.course_types import BASE_ROUTE as COURSE_TYPES_BASE_ROUTE
 from api.course_types.routes import course_types
-from api.admin import setup_admin
-#from models import Person
+
+from api.models import CourseType
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')

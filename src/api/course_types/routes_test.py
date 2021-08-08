@@ -1,11 +1,12 @@
 from flask.testing import FlaskClient
 from api.tests import API_BASE_URL
-from api.tests.fixtures import client, app
+from api.tests.fixtures import client, app, db
 from . import BASE_ROUTE
 from .model import CourseType
 
 URL = API_BASE_URL + BASE_ROUTE
 
+# Helper methods
 def make_course_type(id: int = 123, name: str = 'Test CourseType',
                 duration: int = 1) -> CourseType:
     return CourseType(id=id, name=name, duration=duration)
@@ -13,16 +14,16 @@ def make_course_type(id: int = 123, name: str = 'Test CourseType',
 def create_course_type(client, payload):
     return client.post(URL, json=payload, follow_redirects=True)
 
-# class TestCourseTypeResource:
-#     def test_create(self, client):
-#         course_type = make_course_type()
-#         payload = dict(
-#             name=course_type.name,
-#             duration=course_type.duration
-#         )
-#         response = create_course_type(client, payload)
-#         print("--------response",response.__dict__)
-#         assert response._status_code == 201
+class TestCourseTypeResource:
+    def test_create(self, client):
+        course_type = make_course_type()
+        payload = dict(
+            name=course_type.name,
+            duration=course_type.duration
+        )
+        response = create_course_type(client, payload)
+        print("--------response",response.__dict__)
+        assert response._status_code == 201
 
     """
     @patch.object(WidgetService, 'get_all',
