@@ -1,6 +1,6 @@
 from flask.testing import FlaskClient
 from api.tests import API_BASE_URL
-from api.tests.fixtures import client, app, db
+from api.tests.fixtures import app, client
 from . import BASE_ROUTE
 from .model import CourseType
 
@@ -22,7 +22,6 @@ class TestCourseTypeResource:
             duration=course_type.duration
         )
         response = create_course_type(client, payload)
-        print("--------response",response.__dict__)
         assert response._status_code == 201
 
     """
