@@ -1,4 +1,4 @@
-# WebApp boilerplate with React JS
+# WebApp boilerplate with React JS and Flask API
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-flask-hello.git)
 
 <p align="center">
@@ -49,7 +49,7 @@ It is recomended to install the backend first, make sure you have Python 3.8, Pi
 
 4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
 5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start
+6. Run the application: `$ pipenv run start`
 
 
 ### Front-End Manual Installation:
@@ -62,3 +62,8 @@ It is recomended to install the backend first, make sure you have Python 3.8, Pi
 ## Publish your website!
 
 This boilerplate it's 100% integrated with Herkou, just by pushing your changes to the heroku repository it will deploy: `$ git push heroku main`
+
+
+		// "prettier-webpack-plugin": "^1.2.0",
+"dotenv-webpack": "^1.7.0",
+		"friendly-errors-webpack-plugin": "^1.7.0",
