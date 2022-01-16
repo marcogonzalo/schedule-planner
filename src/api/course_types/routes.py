@@ -35,7 +35,7 @@ def create():
 
 @course_types.route('/<int:id>')
 def show(id):
-    course_type = CourseType.query.get(id)
+    course_type = CourseType.get_by_id(id)
     return jsonify(course_type.to_dict()), 200
 
 
@@ -60,3 +60,9 @@ def update(id):
 
     course_type.update(**data)
     return jsonify(course_type.to_dict()), 200
+
+@course_types.route('/<int:id>', methods=['DELETE'])
+def delete(id):
+    course_type = CourseType.get_by_id(id)
+    course_type.delete()
+    return "Course Type deleted", 205

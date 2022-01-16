@@ -16,8 +16,10 @@ def make_course_type(id: int = 123, name: str = 'Test CourseType',
 def get_course_type(client, id):
     return client.get("{url}/{id}".format(url=URL, id=id))
 
+
 def get_course_types(client):
     return client.get(URL)
+
 
 def create_course_type(client, payload):
     return client.post(URL, json=payload, follow_redirects=True)
@@ -25,6 +27,10 @@ def create_course_type(client, payload):
 
 def update_course_type(client, id, payload):
     return client.put("{url}/{id}".format(url=URL, id=id), json=payload, follow_redirects=True)
+
+
+def delete_course_type(client, id):
+    return client.delete("{url}/{id}".format(url=URL, id=id))
 
 
 class TestCourseTypeResource:
@@ -115,6 +121,10 @@ class TestCourseTypeResource:
         assert response._status_code == 200
         assert len(response.get_json()) > 1
 
+    def test_delete(self, client):
+        course_type = make_course_type(id=1)
+        response = delete_course_type(client, course_type.id)
+        assert response._status_code == 205
 
     """
     @patch.object(WidgetService, 'get_all',
