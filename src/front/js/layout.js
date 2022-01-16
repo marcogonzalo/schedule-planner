@@ -11,6 +11,7 @@ import { EditCourseTypePage } from "./pages/course-types/edit-course-type-page";
 import { NotFound } from "./pages/404";
 
 import injectContext from "./store/appContext";
+import { CourseTypeListPage } from "./pages/course-types/course-type-list-page";
 
 //create your first component
 const Layout = () => {
@@ -26,6 +27,7 @@ const Layout = () => {
 					<Routes>
 						<Route exact path="/" element={<Home />} />
 						<Route exact path="course-types">
+							<Route index element={<CourseTypeListPage />} />
 							<Route exact path="new" element={<CreateCourseTypePage />} />
 							<Route exact path=":courseTypeId">
 								<Route exact path="edit" element={<EditCourseTypePage />} />

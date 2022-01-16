@@ -4,9 +4,13 @@ from .model import CourseType
 course_types = Blueprint('course_types', __name__)
 
 
-@course_types.route('', defaults={'page': 'index'})
+@course_types.route('')
 def index():
-    return "Course Type List", 200
+    course_types = CourseType.query.all()
+    course_type_list = []
+    for course_type in course_types:
+        course_type_list.append(course_type.to_dict())
+    return jsonify(course_type_list), 200
 
 
 @course_types.route('', methods=['POST'])

@@ -16,6 +16,8 @@ def make_course_type(id: int = 123, name: str = 'Test CourseType',
 def get_course_type(client, id):
     return client.get("{url}/{id}".format(url=URL, id=id))
 
+def get_course_types(client):
+    return client.get(URL)
 
 def create_course_type(client, payload):
     return client.post(URL, json=payload, follow_redirects=True)
@@ -77,6 +79,15 @@ class TestCourseTypeResource:
         response = update_course_type(client, course_type.id, payload)
         assert response._status_code == 200
         assert response.json.get('duration') == new_duration
+
+    def test_index(self, client):
+        for i in range(12, 15):
+            course_type = make_course_type(id=i)
+            course_type.create()
+        response = get_course_types(client)
+        assert response._status_code == 200
+        assert len(response.get_json()) > 1
+
 
     """
     @patch.object(WidgetService, 'get_all',

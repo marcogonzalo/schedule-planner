@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 
 import { CourseTypeForm } from '../../component/course-type-form';
 
+import { API_URL } from '../../utils/common';
+
 export const EditCourseTypePage = () => {
     const { courseTypeId } = useParams();
     const [courseType, setCourseType] = useState({});
-    const API_URL = process.env.BACKEND_URL + '/api';
 
     useEffect(() => {
         fetch(`${API_URL}/course-types/${courseTypeId}`)
             .then(response => response.json())
             .then(data => {
-
-                setCourseType(data)
+                setCourseType(data);
             })
-    }, [])
+    }, []);
 
     return (
         <div className="container">

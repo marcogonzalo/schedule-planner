@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import { API_URL } from '../utils/common';
+
 export const CourseTypeForm = ({ data }) => {
 	const { register, formState: { errors }, handleSubmit } = useForm();
-    const API_URL = process.env.BACKEND_URL + '/api';
 
     const onSubmit = (formData) => {
         const headers = new Headers({
@@ -27,6 +28,8 @@ export const CourseTypeForm = ({ data }) => {
             headers, 
             method,
         })
+            .then(response => response.json())
+            .then(data => console.log(data));
     };
 
     return (
