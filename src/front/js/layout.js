@@ -2,15 +2,15 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { CreateCourseTypePage } from "./pages/course-types/create-course-type-page";
-import { Single } from "./pages/single";
-import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
+import { Home } from "./pages/home";
+import { CreateCourseTypePage } from "./pages/course-types/create-course-type-page";
+import { EditCourseTypePage } from "./pages/course-types/edit-course-type-page";
 import { NotFound } from "./pages/404";
+
+import injectContext from "./store/appContext";
 
 //create your first component
 const Layout = () => {
@@ -27,9 +27,10 @@ const Layout = () => {
 						<Route exact path="/" element={<Home />} />
 						<Route exact path="course-types">
 							<Route exact path="new" element={<CreateCourseTypePage />} />
+							<Route exact path=":courseTypeId">
+								<Route exact path="edit" element={<EditCourseTypePage />} />
+							</Route>
 						</Route>
-						<Route exact path="demo" element={<Demo />} />
-						<Route exact path="single/:theid" element={<Single />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 					<Footer />

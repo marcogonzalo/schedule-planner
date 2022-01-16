@@ -1,31 +1,32 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 
+import PropTypes from 'prop-types';
+
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 export const CourseTypeForm = ({ data }) => {
 	const { register, formState: { errors }, handleSubmit } = useForm();
-    const BACKEND_URL = process.env.BACKEND_URL + '/api';
+    const API_URL = process.env.BACKEND_URL + '/api';
 
     const onSubmit = (formData) => {
         const headers = new Headers({
             'Content-Type': 'application/json'
         })
+        let path = `${API_URL}/course-types`;
+        let method = 'POST';
+        
         if (data?.id) {
-            formData.id = data.id
-            fetch(`${BACKEND_URL}/course-types/${data.id}`, {
-                body: JSON.stringify(formData),
-                headers, 
-                method: 'PUT',
-            })
-        } else {
-            fetch(`${BACKEND_URL}/course-types`, {
-                body: JSON.stringify(formData),
-                headers,
-                method: 'POST',
-            })
-        } 
+            path = `${path}/${data.id}`;
+            method = 'PUT';
+        }
+        
+        fetch(path, {
+            body: JSON.stringify(formData),
+            headers, 
+            method,
+        })
     };
 
     return (
@@ -69,3 +70,11 @@ export const CourseTypeForm = ({ data }) => {
         </Form>
     );
 }
+
+CourseTypeForm.propTypes = {
+    data: PropTypes.object
+};
+
+CourseTypeForm.defaultProps = {
+    data: null,
+};
