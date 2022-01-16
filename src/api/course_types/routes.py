@@ -21,11 +21,11 @@ def create():
     if name is None or len(name) == 0:
         return "Please, provide a valid CourseType name", 422
 
-    duration = body.get('duration')
+    duration = int(body.get('duration'))
     if duration is None or duration <= 0:
         return "Please, provide a valid CourseType duration", 422
 
     course_type = CourseType(name=name, duration=duration)
     course_type.create()
 
-    return "Created", 201
+    return "Course type created", 201

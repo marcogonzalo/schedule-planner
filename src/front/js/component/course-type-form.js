@@ -6,9 +6,28 @@ import Form from 'react-bootstrap/Form';
 
 export const CourseTypeForm = ({ data }) => {
 	const { register, formState: { errors }, handleSubmit } = useForm();
-    const onSubmit = (data) => {
-        console.log("data", data);
-    } 
+    const BACKEND_URL = process.env.BACKEND_URL + '/api';
+
+    const onSubmit = (formData) => {
+        const headers = new Headers({
+            'Content-Type': 'application/json'
+        })
+        if (data?.id) {
+            formData.id = data.id
+            fetch(`${BACKEND_URL}/course-types/${data.id}`, {
+                body: JSON.stringify(formData),
+                headers, 
+                method: 'PUT',
+            })
+        } else {
+            fetch(`${BACKEND_URL}/course-types`, {
+                body: JSON.stringify(formData),
+                headers,
+                method: 'POST',
+            })
+        } 
+    };
+
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-3">
