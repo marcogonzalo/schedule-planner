@@ -34,15 +34,13 @@ class TestCourseTypeResource:
         response = create_course_type(client, payload)
         assert response._status_code == 201
 
-    def test_invalid_body_on_create(self, client):
+    def test_create_with_invalid_data(self, client):
         course_type = make_course_type()
         payload = None
         response = create_course_type(client, payload)
         assert response._status_code == 400
         assert b'The request body is null' in response.data
 
-    def test_invalid_name_on_create(self, client):
-        course_type = make_course_type()
         payload = dict(duration=course_type.duration)
         response = create_course_type(client, payload)
         assert response._status_code == 422
@@ -53,8 +51,6 @@ class TestCourseTypeResource:
         assert response._status_code == 422
         assert b'Please, provide a valid CourseType name' in response.data
 
-    def test_invalid_duration_on_create(self, client):
-        course_type = make_course_type()
         payload = dict(name=course_type.name)
         response = create_course_type(client, payload)
         assert response._status_code == 422
@@ -72,9 +68,40 @@ class TestCourseTypeResource:
         assert response._status_code == 200
         assert response.json.get('id') == course_type.id
 
+    def test_update_with_invalid_data(self, client):
+        course_type = make_course_type(id=1)
+        new_duration = course_type.duration + 1
+
+        payload = None
+        response = update_course_type(client, course_type.id, payload)
+        assert response._status_code == 400
+        assert b'The request body is null' in response.data
+
+        payload = dict(duration=course_type.duration)
+        response = update_course_type(client, course_type.id, payload)
+        assert response._status_code == 422
+        assert b'Please, provide a valid CourseType name' in response.data
+
+        payload = dict(name='', duration=course_type.duration)
+        response = update_course_type(client, course_type.id, payload)
+        assert response._status_code == 422
+        assert b'Please, provide a valid CourseType name' in response.data
+
+        payload = dict(name=course_type.name)
+        response = update_course_type(client, course_type.id, payload)
+        assert response._status_code == 422
+        assert b'Please, provide a valid CourseType duration' in response.data
+
+        payload = dict(name=course_type.name,
+                       duration=-course_type.duration)
+        response = update_course_type(client, course_type.id, payload)
+        assert response._status_code == 422
+        assert b'Please, provide a valid CourseType duration' in response.data
+
     def test_update(self, client):
         course_type = make_course_type(id=1)
         new_duration = course_type.duration + 1
+
         payload = dict(name=course_type.name, duration=new_duration)
         response = update_course_type(client, course_type.id, payload)
         assert response._status_code == 200
