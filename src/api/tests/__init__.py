@@ -1,0 +1,3 @@
+import os
+from api import BASE_ROUTE as API_BASE_ROUTE
+API_BASE_URL = API_BASE_ROUTE

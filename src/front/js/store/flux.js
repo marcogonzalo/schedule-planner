@@ -1,6 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
+    const BACKEND_URL = process.env.BACKEND_URL;
 	return {
 		store: {
+			apiUrl: `${BACKEND_URL}/api`, 
 			message: null,
 			demo: [
 				{
@@ -23,7 +25,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMessage: () => {
 				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
+				fetch(BACKEND_URL + "/api/hello")
 					.then(resp => resp.json())
 					.then(data => setStore({ message: data.message }))
 					.catch(error => console.log("Error loading message from backend", error));
